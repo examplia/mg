@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>TC2 Soundtrack — take out that mg.</title>
+  <style>
+    html, body { height: 100%; margin: 0; background: #000; }
+    video {
+      width: 100vw;
+      height: 100vh;
+      object-fit: contain; /* change to 'cover' if you want edge-to-edge crop */
+      background: #000;
+    }
+    .hint {
+      position: fixed; right: 12px; bottom: 12px;
+      font: 12px/1.2 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: #bbb; opacity: .7; user-select: none;
+    }
+  </style>
+</head>
+<body>
+  <video id="vid" controls autoplay muted playsinline
+         src="https://raw.githubusercontent.com/examplia/mg/main/TC2%20Soundtrack%EF%BC%9A%20take%20out%20that%20mg..mp4">
+    Sorry, your browser can’t play this video.
+  </video>
+  <div class="hint">Double‑click video or press <b>F</b> to toggle fullscreen</div>
+
+  <script>
+    const vid = document.getElementById('vid');
+
+    const q = new URLSearchParams(location.search).get('src');
+    if (q) vid.src = q;
+
+    function toggleFS() {
+      if (!document.fullscreenElement) {
+        (document.documentElement.requestFullscreen ||
+         document.documentElement.webkitRequestFullscreen ||
+         document.documentElement.msRequestFullscreen).call(document.documentElement);
+      } else {
+        (document.exitFullscreen ||
+         document.webkitExitFullscreen ||
+         document.msExitFullscreen).call(document);
+      }
+    }
+    vid.addEventListener('dblclick', toggleFS);
+    addEventListener('keydown', (e) => { if (e.key.toLowerCase() === 'f') toggleFS(); });
+
+    vid.addEventListener('canplay', () => { vid.play().catch(() => {}); });
+  </script>
+</body>
+</html>
